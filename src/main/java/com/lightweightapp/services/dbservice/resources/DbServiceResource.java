@@ -5,8 +5,11 @@
  */
 package com.lightweightapp.services.dbservice.resources;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.lightweightapp.services.dbservice.model.User;
+import com.lightweightapp.services.dbservice.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  *
@@ -16,5 +19,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rest/db")
 public class DbServiceResource
 {
+    private UserRepository userRepository;
+
+    public DbServiceResource(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/{userid}")
+    public List<User> getUser(@PathVariable("userid") final int userid)
+    {
+        return null;
+        //return userRepository.findById(userid)
+    }
+
+    @PostMapping("/createUser")
+    public List<User> createUser (@RequestBody final User user)
+    {
+        return null;
+    }
 
 }
