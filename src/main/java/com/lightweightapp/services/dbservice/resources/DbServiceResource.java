@@ -6,6 +6,7 @@
 package com.lightweightapp.services.dbservice.resources;
 
 import com.lightweightapp.services.dbservice.model.User;
+import com.lightweightapp.services.dbservice.model.UserModel;
 import com.lightweightapp.services.dbservice.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +29,15 @@ public class DbServiceResource
     @GetMapping("/{userid}")
     public List<User> getUser(@PathVariable("userid") final int userid)
     {
-        return null;
-        //return userRepository.findById(userid)
+        List<User> user = userRepository.findById(userid);
+        return user;
     }
 
-    @PostMapping("/createUser")
-    public List<User> createUser (@RequestBody final User user)
+    @PostMapping("/createuser")
+    public User createUser(@RequestBody final UserModel user)
     {
-        return null;
+        User savedUserInfo = userRepository.save(new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword()));
+        return savedUserInfo;
     }
 
 }
