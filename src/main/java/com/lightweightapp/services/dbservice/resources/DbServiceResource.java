@@ -5,8 +5,11 @@
  */
 package com.lightweightapp.services.dbservice.resources;
 
+import com.lightweightapp.services.dbservice.model.Payment;
+import com.lightweightapp.services.dbservice.model.PaymentModel;
 import com.lightweightapp.services.dbservice.model.User;
 import com.lightweightapp.services.dbservice.model.UserModel;
+import com.lightweightapp.services.dbservice.repository.PaymentRepository;
 import com.lightweightapp.services.dbservice.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,7 @@ import java.util.List;
 public class DbServiceResource
 {
     private UserRepository userRepository;
+    private PaymentRepository paymentRepository;
 
     public DbServiceResource(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -38,6 +42,13 @@ public class DbServiceResource
     {
         User savedUserInfo = userRepository.save(new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword()));
         return savedUserInfo;
+    }
+
+    @GetMapping("/savepayment")
+    public Payment savePaymentRecord(@RequestBody final PaymentModel paymentRecord)
+    {
+        Payment savedPayementRecord =  paymentRepository.save(new Payment(paymentRecord.getUserId(), paymentRecord.getPaymentAmount(), paymentRecord.getPaymentMethod(), paymentRecord.getStatus()));
+        return savedPayementRecord;
     }
 
 }

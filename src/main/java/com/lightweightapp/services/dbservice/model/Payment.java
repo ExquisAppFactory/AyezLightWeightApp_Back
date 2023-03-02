@@ -22,8 +22,7 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int paymentID, int userId, Double paymentAmount, String paymentMethod, String status) {
-        this.paymentID = paymentID;
+    public Payment(int userId, Double paymentAmount, String paymentMethod, String status) {
         this.userId = userId;
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
