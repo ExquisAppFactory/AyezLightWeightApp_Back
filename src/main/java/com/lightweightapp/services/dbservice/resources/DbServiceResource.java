@@ -44,11 +44,13 @@ public class DbServiceResource
         return savedUserInfo;
     }
 
-    @GetMapping("/savepayment")
+    @PostMapping("/savepayment")
     public Payment savePaymentRecord(@RequestBody final PaymentModel paymentRecord)
     {
         Payment savedPayementRecord =  paymentRepository.save(new Payment(paymentRecord.getUserId(), paymentRecord.getPaymentAmount(), paymentRecord.getPaymentMethod(), paymentRecord.getStatus()));
         return savedPayementRecord;
     }
+
+
 
 }
