@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer>
 {
-    List<Payment> findPaymentById(int paymentId);
+    Payment findPaymentById(int paymentId);
 }

@@ -44,6 +44,13 @@ public class DbServiceResource
         return savedUserInfo;
     }
 
+    @GetMapping("/getPaymentRecods/{paymentid}")
+    public Payment getPaymentRecord(@PathVariable("paymentid") final int paymentId)
+    {
+        Payment paymentInfo = paymentRepository.findPaymentById(paymentId);
+        return paymentInfo;
+    }
+
     @PostMapping("/savepayment")
     public Payment savePaymentRecord(@RequestBody final PaymentModel paymentRecord)
     {
