@@ -1,15 +1,14 @@
 package com.lightweightapp.services.dbservice.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "payments" , schema = "light_weight_app")
 public class Payment {
-    @Column(name = "id")
-    private  int paymentID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @Column(name = "user_id")
     private int userId;
     @Column(name = "payment_amount")
@@ -29,12 +28,12 @@ public class Payment {
         this.status = status;
     }
 
-    public int getPaymentID() {
-        return paymentID;
+    public int getId() {
+        return id;
     }
 
-    public void setPaymentID(int paymentID) {
-        this.paymentID = paymentID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {

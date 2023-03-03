@@ -5,12 +5,10 @@
  */
 package com.lightweightapp.services.dbservice.resources;
 
-import com.lightweightapp.services.dbservice.model.Payment;
-import com.lightweightapp.services.dbservice.model.PaymentModel;
-import com.lightweightapp.services.dbservice.model.User;
-import com.lightweightapp.services.dbservice.model.UserModel;
+import com.lightweightapp.services.dbservice.model.*;
 import com.lightweightapp.services.dbservice.repository.PaymentRepository;
 import com.lightweightapp.services.dbservice.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,17 +29,35 @@ public class DbServiceResource
     }
 
     @GetMapping("/{userid}")
-    public List<User> getUser(@PathVariable("userid") final int userid)
+    public UserResponseModel getUser(@PathVariable("userid") final int userid)
     {
-        List<User> user = userRepository.findById(userid);
-        return user;
+        User user = userRepository.findById(userid);
+        UserResponseModel userResponseModel =  new UserResponseModel();
+        userResponseModel.setRequestStatus(HttpStatus.OK.getReasonPhrase());
+        userResponseModel.setResponseMessage("User record fetched successfully!");
+        UserResponseModel.Data data = userResponseModel.new Data();
+        data.setFirstName(user.getFirstName());
+        data.setLastName(user.getLastName());
+        data.setUserId(user.getId());
+        data.setEmail(user.getEmail());
+        userResponseModel.setData(data);
+        return userResponseModel;
     }
 
     @PostMapping("/createuser")
-    public User createUser(@RequestBody final UserModel user)
+    public UserResponseModel createUser(@RequestBody final UserModel user)
     {
         User savedUserInfo = userRepository.save(new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword()));
-        return savedUserInfo;
+        UserResponseModel userResponseModel = new UserResponseModel();
+        userResponseModel.setResponseMessage("User created successfully");
+        userResponseModel.setRequestStatus(HttpStatus.CREATED.getReasonPhrase());
+        UserResponseModel.Data data = userResponseModel.new Data();
+        data.setUserId(savedUserInfo.getId());
+        data.setFirstName(savedUserInfo.getFirstName());
+        data.setLastName(savedUserInfo.getLastName());
+        data.setEmail(savedUserInfo.getEmail());
+        userResponseModel.setData(data);
+        return userResponseModel;
     }
 
     @GetMapping("/getPaymentRecods/{paymentid}")
